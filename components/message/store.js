@@ -9,13 +9,22 @@ function addMessage(message) {
 
 async function getMessage(filterUser) { // funcion asyncrona
     // return list;
-    let filter = {}; // Se crea un objeto vacio
-    if(filterUser !== null) { // su filter user no es null entonces
+    return new Promise((resolve, reject ) => {
+        let filter = {}; // Se crea un objeto vacio
+        if(filterUser !== null) { // su filter user no es null entonces
         filter = { user: filterUser}; // filter tomara user y le dara valor filterUser
-    }
-    const messages = await Model.find(filter); // espera que retorne todos los modelos
-        //Arriba espera si hay o no filter
-    return messages; // se muestra
+     }
+        Model.find(filter) // espera que retorne todos los modelos(
+        .populate('user')
+            .exec((error, populated) => {
+                if(error) {
+                    reject(error);
+                    return false;
+                }
+                resolve(populated);
+            })
+    })
+    
 }
 
 async function updateText(id, message) {
