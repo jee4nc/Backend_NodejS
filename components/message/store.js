@@ -46,10 +46,17 @@ async function updateText(id, message) {
     //Retorna este await
 
 }
+
+function removeMessage(id) {
+    return Model.deleteOne({ //Retorna el modelo con la funcion deleteone
+        _id: id //elimina el que el atributo _id sea id
+    });
+}
 module.exports = {
     add: addMessage,
     list: getMessage,
-    updateText: updateText // Se exporta
+    updateText: updateText, // Se exporta
+    remove: removeMessage
     //GET
     //UPDATE
     //DELETE

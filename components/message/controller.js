@@ -50,8 +50,25 @@ function updateMessage(id, message) {
     })
 }
 
+function deleteMessage(id) {
+    return new Promise((resolve, reject) => { // promesa
+        if(!id) { // si no recibe id
+            reject('Parametros o id Invalido'); // retorna esto y false
+            return false;
+        }
+        store.remove(id)    // si no entra aca donde metodo remove recibe id como param
+            .then(() =>{
+                resolve();  // si todo sale bien se resuelve
+            })
+            .catch(e => {
+                reject(e);  // si pasa algo se captura el error y reject
+            })
+        
+    })
+}
 module.exports = {
     addMessage,
     getMessages,
-    updateMessage // Se exporta
+    updateMessage, // Se exporta
+    deleteMessage
 }
