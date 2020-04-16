@@ -19,25 +19,37 @@ function addMessage(message) {
     myMessage.save(); // se guarda en la bdd
 }
 
-async function getMessage() { // funcion asyncrona
+async function getMessage(filterUser) { // funcion asyncrona
     // return list;
-    const messages = await Model.find(); // espera que retorne todos los modelos
+    let filter = {}; // Se crea un objeto vacio
+    if(filterUser !== null) { // su filter user no es null entonces
+        filter = { user: filterUser}; // filter tomara user y le dara valor filterUser
+    }
+    const messages = await Model.find(filter); // espera que retorne todos los modelos
+        //Arriba espera si hay o no filter
     return messages; // se muestra
 }
 
 async function updateText(id, message) {
+    //Update text recibe el id y message que se da en controller
     const foundMessage = await Model.findOne({
+        // la constante recibe el await de la busqueda de que_id sea igual al params que se recibe
         _id: id
     });
     foundMessage.message = message;
+    //EL valor de ese archivo que tiene el mismo id, en el atributo message 
+    //Sera igual que el message que se recibe por params
+
     const newMessage= await foundMessage.save();
+    //Un await de que se salve el guardado
     return newMessage;
+    //Retorna este await
 
 }
 module.exports = {
     add: addMessage,
     list: getMessage,
-    updateText: updateText
+    updateText: updateText // Se exporta
     //GET
     //UPDATE
     //DELETE

@@ -25,20 +25,27 @@ function addMessage(user, message) {
     
 }
 
-function getMessages() {
+function getMessages(filterUser) { // le paso como parametro filteUser
     return new Promise((resolve, reject) =>{
-        resolve(store.list());
+        resolve(store.list(filterUser)); // Y resuelve la promesa con filter como parametro
     });
 }
 
 function updateMessage(id, message) {
+    // El metodo updateMessage recibe el id y el message
     return new Promise(async (resolve, reject) => {
+        // Retornara una promesa asyncrona
         if (!id || !message) {
+            //Si no recibe un id o un message
             reject('Invalid data');
+            //Retorna esto
             return false;
         }
         const ressult = await store.updateText(id, message);
+        //Si no entra en el if, hará el await aca, del metodo updateText de store y le 
+        //pasa los parametros
         resolve(ressult);
+        //Devuelve este await, revisar el store.js
             
     })
 }
@@ -46,5 +53,5 @@ function updateMessage(id, message) {
 module.exports = {
     addMessage,
     getMessages,
-    updateMessage
+    updateMessage // Se exporta
 }

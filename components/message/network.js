@@ -4,16 +4,10 @@ const controller = require('./controller');
 const router = express.Router();
 
 router.get('/', function (req, res) {
-    // console.log(req.headers);
-    // res.header({ // Esto me permite poder enviar un header especifico
-    //              // Esto se ve en el apartado Header
-    //     "custom-header": "Nuestro header",
-    // });
-    // // res.send('Aqui iria una lista de mensajes');
-    // response.success(req, res, 'Aqui iria una lista de mensajes');
+    const filterMessages = req.query.user || null; // Se crea constante que permite pedir el usuario
 
-
-    controller.getMessages() //Se llama a la funcion de controller get message
+    controller.getMessages(filterMessages) // Se lo paso como parametro
+    //Se llama a la funcion de controller get message
                             // esta funcion trae la lista de mensajes
 
     .then((messageList) =>{ //si se resuelve, recibe el mensaje del controller get message
@@ -39,13 +33,28 @@ router.post('/', function (req, res) {
 });
 
 router.patch('/:id', function(req, res) {
+    //El metodo patch recibe como parametro la variable id
     console.log(req.params.id);
+    //Aca imprimimos el id para verificar que si lo esta recibiendo
+
     controller.updateMessage(req.params.id, req.body.message)
+    //Llama al metodo updateMessage y le da como parametro el id de params y el body message
         .then((data) =>{
+            // Si se resuelve la promesa devolvera el metodo success con los siguientes parametros
             response.success(req, res, data , 200);
         })
         .catch( e => {
+            // Si da error devolvera el metodo error
             response.error(req, res , 'Error interno', 500, e);
         });
 })
 module.exports = router;
+
+    // console.log(req.headers);
+    // res.header({ // Esto me permite poder enviar un header especifico
+    //              // Esto se ve en el apartado Header
+    //     "custom-header": "Nuestro header",
+    // });
+    // // res.send('Aqui iria una lista de mensajes');
+    // response.success(req, res, 'Aqui iria una lista de mensajes');
+
