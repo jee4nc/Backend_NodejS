@@ -3,7 +3,7 @@
 const store = require('./store'); // se importa el archivo de guardado bdd
 
 
-function addMessage(chat, user, message) {
+function addMessage(chat, user, message, file) { //puede o no puede venir file
 
     return new Promise((resolve, reject) => {
         if(!user || !message || !chat) {
@@ -12,11 +12,18 @@ function addMessage(chat, user, message) {
             return false;
         }
 
+        let fileUrl = ''; // se instancia un url vacio
+        if(file) { //si viene file hara esto
+            fileUrl = 'http://localhost:3000/app/files/' +file.filename;
+            //retorna un url de file y el filename, que es el nombre en clave del file
+            // para enteder puedes hacer console.log(file) para ver los atributos
+        }
         const fullMessage = {
             chat: chat,
             user : user,
             message: message,
-            date: new Date()    //Se le agrega un valor fecha
+            date: new Date(),    //Se le agrega un valor fecha
+            file: fileUrl, // se le otorga el valor
         };
         console.log(fullMessage);
         store.add(fullMessage);

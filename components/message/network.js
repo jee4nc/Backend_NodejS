@@ -8,7 +8,7 @@ const controller = require('./controller');
 const router = express.Router();
 
 const upload = multer({ // Instancia de multer donde se guardan los archivos
-    dest: 'uploads/',
+    dest: 'public/files/',
 })
 
 
@@ -31,7 +31,11 @@ router.get('/', function (req, res) {
 
 //single y ('file') que es el nombre del atributo en el modelo
 router.post('/',upload.single('file'), function (req, res) {   //UPLOAD ES UN MIDLEWARE, ANTES DE FUNC
-    controller.addMessage(req.body.chat ,req.body.user, req.body.message) // Recibe como parametro el body de
+    controller.addMessage(req.body.chat,
+        req.body.user, 
+        req.body.message, 
+        req.file // se le envia al controller
+        ) // Recibe como parametro el body de
     .then((fullMessage) => {    //Si se resuelve la promesa recibe el mensaje
         response.success(req, res, fullMessage, 201); // y lo resuelve con la respuesta
     })
