@@ -1,6 +1,7 @@
 //ACA VA TODA LA LOGICA DEL NEGOCIO DE LAS RESPONSE
 
 const store = require('./store'); // se importa el archivo de guardado bdd
+const socket = require('../../socket').socket; // hacemos el import de la funcion socket    
 
 
 function addMessage(chat, user, message, file) { //puede o no puede venir file
@@ -27,6 +28,10 @@ function addMessage(chat, user, message, file) { //puede o no puede venir file
         };
         console.log(fullMessage);
         store.add(fullMessage);
+
+        //Antes de resolver la promesa
+        socket.io.emit('message', fullMessage);
+
         resolve(fullMessage);
     });
     

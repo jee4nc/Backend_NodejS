@@ -17,7 +17,7 @@ router.post('/', function(req, res) { // Metodo post
         });
 });
 
-router.get('/userId', function(req, res) {
+router.get('/:userId', function(req, res) {
     controller.listChats(req.params.userId)
         .then(users => {
             response.success(req, res, users, 200);
