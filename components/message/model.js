@@ -16,6 +16,7 @@ const mySchema = new Schema({ // modelo de SCHEMA
         required: true,
     },
     date: Date,
+    file: String, // Esto es el multer
 });
 
 const model = mongoose.model('Message', mySchema);

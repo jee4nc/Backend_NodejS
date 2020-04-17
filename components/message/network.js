@@ -1,7 +1,16 @@
 const express = require('express');
+
+const multer = require('multer');
+// Multer permite poder gestionar archivos en nodeJS
+
 const response = require('../../network/response');
 const controller = require('./controller');
 const router = express.Router();
+
+const upload = multer({ // Instancia de multer donde se guardan los archivos
+    dest: 'uploads/',
+})
+
 
 router.get('/', function (req, res) {
     const filterMessages = req.query.user || null; // Se crea constante que permite pedir el usuario
@@ -20,8 +29,8 @@ router.get('/', function (req, res) {
     })
 });
 
-
-router.post('/', function (req, res) {
+//single y ('file') que es el nombre del atributo en el modelo
+router.post('/',upload.single('file'), function (req, res) {   //UPLOAD ES UN MIDLEWARE, ANTES DE FUNC
     controller.addMessage(req.body.chat ,req.body.user, req.body.message) // Recibe como parametro el body de
     .then((fullMessage) => {    //Si se resuelve la promesa recibe el mensaje
         response.success(req, res, fullMessage, 201); // y lo resuelve con la respuesta
