@@ -22,7 +22,7 @@ router.get('/', function (req, res) {
 
 
 router.post('/', function (req, res) {
-    controller.addMessage(req.body.user, req.body.message) // Recibe como parametro el body de
+    controller.addMessage(req.body.chat ,req.body.user, req.body.message) // Recibe como parametro el body de
     .then((fullMessage) => {    //Si se resuelve la promesa recibe el mensaje
         response.success(req, res, fullMessage, 201); // y lo resuelve con la respuesta
     })

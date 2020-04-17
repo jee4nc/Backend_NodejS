@@ -3,16 +3,17 @@
 const store = require('./store'); // se importa el archivo de guardado bdd
 
 
-function addMessage(user, message) {
+function addMessage(chat, user, message) {
 
     return new Promise((resolve, reject) => {
-        if(!user || !message) {
+        if(!user || !message || !chat) {
             console.error('[MessageController]: No hay user o message');
             reject('Los datos son incorrectos');
             return false;
         }
 
         const fullMessage = {
+            chat: chat,
             user : user,
             message: message,
             date: new Date()    //Se le agrega un valor fecha

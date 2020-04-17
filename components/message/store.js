@@ -23,8 +23,8 @@ async function getMessage(filterUser) { // funcion asyncrona
                 }
                 resolve(populated);
             })
-    })
-    
+    });
+
 }
 
 async function updateText(id, message) {
